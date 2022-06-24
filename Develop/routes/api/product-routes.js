@@ -80,17 +80,22 @@ router.put('/:id', (req, res) => {
           };
         });
       // figure out which ones to remove
-      const productTagsToRemove = productTags   // [1,2,3,5,6]
-        .filter(( tag_id ) =>! req.body.tagIds.includes(tag_id))    //tagIds [1,2,5]    - result = 
-        //.map( (tag_id ) => re id);
-        console.log(productTagsToRemove);   // [3,6]
+      const productTagsToRemove = productTags   // [0:{1},1:{2},3,5,6]
+        .filter(({ tag_id } ) =>{ return !req.body.tagIds.includes(tag_id)})    //tagIds [1,2,5]    - result = [0:{3},1:{6}]
+        .map(({tag_id}) => {
+          //console.log(tag_id)
+          return tag_id          
+        });
+        //console.log(productTagsToRemove);   // [3,6]
 
-
+        
       // run both actions
       return Promise.all([
-        //ProductTag.destroy({ where: { product_id:req.params.id, tag_id: productTagsToRemove } }),
-       // ProductTag.bulkCreate(newProductTags),
+       ProductTag.destroy({ where: { product_id:req.params.id, tag_id: productTagsToRemove } }),
+        ProductTag.bulkCreate(newProductTags)
       ]);
+      
+
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
@@ -101,6 +106,18 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  
+
+  return Promise.all([
+    ProductTag.destroy({ where: { product_id:req.params.id } }),
+    Product.destroy({ where: { id:req.params.id } })
+   ])
+   .then((updatedProductTags) => res.json(updatedProductTags))
+   .catch((err) => {
+     // console.log(err);
+     res.status(400).json(err);
+   });
+
 });
 
 module.exports = router;
