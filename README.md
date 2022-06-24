@@ -18,6 +18,17 @@ None
 Enter node server.js in the command prompt. User should then be able to search, create, update, or delete various products, categories, and IDs.
 
 ## Demo
+Here is a demo showing how the application works:
+
+
+
+https://user-images.githubusercontent.com/98942793/175505996-3a3ce630-822a-4f2a-8191-97cf02dcd778.mp4
+
+
+
+https://user-images.githubusercontent.com/98942793/175506437-49d208d6-b0b9-46e6-8928-4904f05069c3.mp4
+
+
 
 ## Questions
 To reach out with any questions, please contact me at Sajalagn2@gmail.com
